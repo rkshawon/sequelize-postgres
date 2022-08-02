@@ -1,5 +1,27 @@
 const db = require("../database/config");
 Student = db.student;
+Transaction = db.transaction
+
+exports.createTransaction = (req, res)=>{
+    console.log(req.body)
+    Transaction.create({
+        amount: req.body.amount,
+        transaction_type: req.body.transaction_type,
+        student_id:req.body.student_id,
+    })
+    .then(data=>{
+        res.status(200).json({
+            status: true,
+            message: `${data} was inserted successfully`
+        })
+    })
+    .catch(err=>{
+        res.status(500).json({
+            status: false,
+            message: `${err} Something went wrong`
+        })
+    })
+}
 
 exports.createOne = (req, res)=>{
     Student.create({
@@ -61,7 +83,9 @@ exports.updateOne = (req, res)=>{
     })
 }
 exports.getOne = (req, res)=>{
-    Student.findByPk( req.params.id )
+    Student.findByPk( req.params.id , {
+        include: Transaction
+    })
     .then(data=>{
         res.status(200).json({
             status: true,

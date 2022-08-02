@@ -1,5 +1,6 @@
 module.exports = (sequelize, Sequelize)=>{
     const Student = sequelize.define("student",{
+        
         name: {
             type: Sequelize.STRING(50)
         },
@@ -12,6 +13,7 @@ module.exports = (sequelize, Sequelize)=>{
         department:{
             type: Sequelize.STRING(100)
         }},
+
     {
         timestamps: false
     }
